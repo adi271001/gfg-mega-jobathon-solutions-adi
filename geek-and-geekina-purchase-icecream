@@ -1,0 +1,33 @@
+class Solution {
+  public:
+   long long bs(vector<int> &v,int x,int high){
+      int low =0;
+      long long ani = 0;
+      while(low<=high){
+          int mid = low +(high-low)/2;
+          if(v[mid]<=x){
+              ani=mid+1;
+              low=mid+1;
+          }
+          else{
+              high=mid-1;
+          }
+      }
+      return ani;
+  }
+    long long findGoodPairs(vector<int> a, int n, int k) {
+        // code here
+        unordered_map<int,vector<int>>mp;
+        for(int i=0;i<n;i++)
+        mp[a[i]].push_back(i);
+        long long ans=0;
+        for(auto key:mp){
+            vector<int>v=key.second;
+            for(int j=1;j<v.size();j++){
+                long long x=bs(v,v[j]-k,j-1);
+                ans+=x;
+            }
+        }
+        return ans;
+}
+};
